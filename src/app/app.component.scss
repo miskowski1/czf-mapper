@@ -1,0 +1,16 @@
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  display: flex;
+  padding: 20px;
+
+  > div {
+    flex-grow: 1;
+
+    &.right-col {
+      flex-grow: 2;
+    }
+  }
+}

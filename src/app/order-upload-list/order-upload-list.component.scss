@@ -1,0 +1,14 @@
+.print-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.order-container {
+  display: flex;
+  align-items: center;
+}
+
+::ng-deep .mat-snack-bar-container.warn {
+  background: #f44336;
+}

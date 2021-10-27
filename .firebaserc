@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "czfmapper"
+  },
+  "targets": {
+    "czfmapper": {
+      "hosting": {
+        "czf-mapper": [
+          "czfmapper"
+        ]
+      }
+    }
+  }
+}

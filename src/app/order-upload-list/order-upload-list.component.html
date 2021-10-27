@@ -1,0 +1,14 @@
+<ng-template ngFor [ngForOf]="files$ | async" let-file>
+  <div class="order-container">
+    <span>{{ file.name }}</span>
+    <button mat-icon-button color="warn" (click)="removeFile(file.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</ng-template>
+
+<app-order-upload (onFileUpload)="addFile($event)"></app-order-upload>
+
+<button mat-fab color="primary" [disabled]="!(hasFiles$ | async)" class="print-button" (click)="generateReport()">
+  <mat-icon>print</mat-icon>
+</button>
