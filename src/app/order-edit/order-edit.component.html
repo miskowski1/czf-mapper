@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Edycja&nbsp;{{ data.fileName }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="mappingForm">
+    <div>
+      <mat-form-field appearance="standard">
+        <mat-label>Ean</mat-label>
+        <mat-select formControlName="ean">
+          <mat-option *ngFor="let val of columns" [value]="val"
+                      [disabled]="val | uniqueColumn : mappingForm.getRawValue()">Kolumna&nbsp;{{ val }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="standard">
+        <mat-label>Nazwa</mat-label>
+        <mat-select formControlName="name">
+          <mat-option *ngFor="let val of columns" [value]="val"
+                      [disabled]="val | uniqueColumn : mappingForm.getRawValue()">Kolumna&nbsp;{{ val }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="standard">
+        <mat-label>Ilość</mat-label>
+        <mat-select formControlName="amount">
+          <mat-option *ngFor="let val of columns" [value]="val"
+                      [disabled]="val | uniqueColumn : mappingForm.getRawValue()">Kolumna&nbsp;{{ val }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Zamknij</button>
+  <button mat-raised-button [mat-dialog-close]="mappingForm.getRawValue()" color="primary">Edytuj</button>
+</mat-dialog-actions>

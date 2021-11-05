@@ -1,14 +1,29 @@
-<ng-template ngFor [ngForOf]="files$ | async" let-file>
-  <div class="order-container">
-    <span>{{ file.name }}</span>
-    <button mat-icon-button color="warn" (click)="removeFile(file.id)">
-      <mat-icon>delete</mat-icon>
-    </button>
-  </div>
-</ng-template>
+<mat-list>
+  <ng-template ngFor [ngForOf]="files$ | async" let-file let-i="index">
+    <ng-container *ngIf="i > 0">
+      <mat-divider></mat-divider>
+    </ng-container>
+    <mat-list-item>
+      <button mat-icon-button (click)="editFile(file.name)" matListIcon>
+        <mat-icon>edit</mat-icon>
+      </button>
+      <h3 matLine>{{ file.name }}</h3>
+      <p matLine>{{ file.entries | fileProductsAmount }}</p>
+      <button mat-icon-button (click)="removeFile(file.name)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-list-item>
+  </ng-template>
+</mat-list>
 
-<app-order-upload (onFileUpload)="addFile($event)"></app-order-upload>
+<app-order-upload></app-order-upload>
 
-<button mat-fab color="primary" [disabled]="!(hasFiles$ | async)" class="print-button" (click)="generateReport()">
-  <mat-icon>print</mat-icon>
-</button>
+<!--<div class="order-container">-->
+<!--  <span>{{ fileName }}</span>-->
+<!--  <button mat-icon-button (click)="editFile(fileName)">-->
+<!--    <mat-icon>edit</mat-icon>-->
+<!--  </button>-->
+<!--  <button mat-icon-button color="warn" (click)="removeFile(fileName)">-->
+<!--    <mat-icon>delete</mat-icon>-->
+<!--  </button>-->
+<!--</div>-->

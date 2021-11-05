@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MapperInterface } from '@models/mapper.interface';
 import * as XLSX from 'xlsx';
-import { MapperInterface } from '../models/mapper.interface';
 
 @Component({
   selector: 'app-include-file',

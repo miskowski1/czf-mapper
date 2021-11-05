@@ -1,5 +1,11 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import * as XLSX from 'xlsx';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { FileService } from '../shared/file.service';
+import * as FileActions from '../store/actions/file.actions';
+import { selectFiles } from '../store/selectors/file.selectors';
 
 @Component({
   selector: 'app-order-upload',
@@ -8,33 +14,35 @@ import * as XLSX from 'xlsx';
 })
 export class OrderUploadComponent implements OnInit {
 
-  @Output() public onFileUpload: EventEmitter<any> = new EventEmitter<any>();
-
   @ViewChild('orderUpload') public orderUploadInput!: ElementRef;
 
-  constructor() {
+  constructor(private actions$: Actions, private snackBar: MatSnackBar, private store: Store) {
   }
 
   ngOnInit(): void {
+    this.actions$.pipe(
+      ofType(FileActions.loadFileSuccess)
+    ).subscribe(_ => {
+      this.snackBar.open('Zamówienie dodane pomyślnie');
+      this.orderUploadInput.nativeElement.value = '';
+    });
+
+    this.actions$.pipe(
+      ofType(FileActions.loadFileFailure)
+    ).subscribe(action => {
+      this.snackBar.open(action.error, undefined, { panelClass: 'warn' });
+      this.orderUploadInput.nativeElement.value = '';
+    })
   }
 
   public onFileSelected(event: any): void {
     const target: DataTransfer = <DataTransfer>event.target;
-    const reader: FileReader = new FileReader();
 
-    reader.onload = (e: any) => {
-      const ab: ArrayBuffer = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(ab);
-      const sn = wb.SheetNames[0];
-      const ws = wb.Sheets[sn];
-
-      const data = XLSX.utils.sheet_to_json(ws, { header: [ 'no', 'name', 'ean', 'sth', 'amount', 'unit', 'price' ] });
-
-      this.onFileUpload.emit({ name: target.files[0].name, data });
-      this.orderUploadInput.nativeElement.value = '';
-    }
-
-    reader.readAsArrayBuffer(target.files[0]);
+    this.store.dispatch(FileActions.loadFile({
+      data: {
+        file: target.files[0]
+      }
+    }));
   }
 
 }

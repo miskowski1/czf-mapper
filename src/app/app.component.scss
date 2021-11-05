@@ -11,6 +11,13 @@
 
     &.right-col {
       flex-grow: 2;
+      margin-left: 20px;
     }
   }
+}
+
+.print-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
 }

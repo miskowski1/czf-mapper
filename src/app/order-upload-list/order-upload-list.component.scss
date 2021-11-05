@@ -1,12 +1,24 @@
-.print-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+:host {
+  display: block;
+  position: sticky;
+  top: 20px;
 }
 
-.order-container {
-  display: flex;
-  align-items: center;
+mat-list {
+  .mat-list-icon {
+    background: rgba(0, 0, 0, .54);
+    color: #fff;
+    font-size: 14px;
+    height: 40px;
+    width: 40px;
+    padding: 0;
+  }
+
+  mat-list-item {
+    p {
+      color: rgba(0, 0, 0, .54);
+    }
+  }
 }
 
 ::ng-deep .mat-snack-bar-container.warn {
